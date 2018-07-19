@@ -1,5 +1,29 @@
 class CrpytoInfosController < ApplicationController
-  before_action :set_crpyto_info, only: [:show, :edit, :update, :destroy]
+    # before_action :set_crpyto_info, only: [:show, :edit, :update, :destroy]
+
+  # gets ticker info from apis
+  def get_ti
+    data = params['crpyto_info']
+    info = CryptoApis.new
+    ticker = info.set_ticker(data['ticker'])
+    if ticker
+      json = {
+          coin:data['ticker'],
+          market_cap:info.percent_marketcap,
+          market_rank: info.top_fifty?,
+          alltime_high: info.alltime_high
+      }
+      p json
+      respond_to do |format|
+        format.json { render json: json  }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: {error:'there was a issue finding your coin please enter full name'}  }
+      end
+    end
+
+  end
 
   # GET /crpyto_infos
   # GET /crpyto_infos.json
