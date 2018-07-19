@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Ticker:
+  = @crpyto_info.ticker
+%p
+  %b Date:
+  = @crpyto_info.date
+
+= link_to 'Edit', edit_crpyto_info_path(@crpyto_info)
+\|
+= link_to 'Back', crpyto_infos_path

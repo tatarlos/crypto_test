@@ -1,0 +1,23 @@
+%h1 Listing crpyto_infos
+
+%table
+  %thead
+    %tr
+      %th Ticker
+      %th Date
+      %th
+      %th
+      %th
+
+  %tbody
+    - @crpyto_infos.each do |crpyto_info|
+      %tr
+        %td= crpyto_info.ticker
+        %td= crpyto_info.date
+        %td= link_to 'Show', crpyto_info
+        %td= link_to 'Edit', edit_crpyto_info_path(crpyto_info)
+        %td= link_to 'Destroy', crpyto_info, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Crpyto info', new_crpyto_info_path
