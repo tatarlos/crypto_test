@@ -44,6 +44,4 @@ class CryptoApis
     percent < 250 ?  "within 250% range from 90 day high price. price today is #{@ticker_price}, 90 day high is #{alltimehigh}" :  "not within 250% range of 90 day high price, price today is #{@ticker_price}, 90 day high is #{alltimehigh}"
   end
 
-
-
 end
