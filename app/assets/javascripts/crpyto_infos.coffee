@@ -11,6 +11,7 @@ $ ->
   $marketCap = $('.market-cap')
   $top50 = $('.market-rank')
   $alltimeHigh = $('.all-time-high')
+  $lastSeven = $('.last-seven')
 
   console.log($input)
   if $input.length > 0
@@ -28,6 +29,7 @@ $ ->
           $marketCap.text(data['market_cap'])
           $top50.text(data['market_rank'])
           $alltimeHigh.text(data['alltime_high'])
+          $lastSeven.text(data['last_seven'])
           $submitBtn.removeAttr('disabled')
       })
 

@@ -11,8 +11,9 @@ class CryptoApis
     @total_market_cap = Coinmarketcap.global['total_market_cap_usd'].to_f
   end
 
-  def set_ticker(id)
+  def set_ticker(id, time = nil)
     begin
+      @time = time.to_i if time.present?
       @ticker = Coinmarketcap.coin(id)[0]
       @ticker_symbol = @ticker['symbol']
       @ticker_name = @ticker['name']
@@ -42,6 +43,14 @@ class CryptoApis
     alltimehigh = a.max
     percent = (a.max/ @ticker_price)*100
     percent < 250 ?  "within 250% range from 90 day high price. price today is #{@ticker_price}, 90 day high is #{alltimehigh}" :  "not within 250% range of 90 day high price, price today is #{@ticker_price}, 90 day high is #{alltimehigh}"
+  end
+
+  def last_seven
+    price_7_days = HTTParty.get("https://min-api.cryptocompare.com/data/histoday?fsym=#{@ticker_symbol}&tsym=#{@currency}&limit=7&aggregate=1&toTs=#{@time}")
+    high = price_7_days["Data"][0..7].map{ |x| x["high"] }.max
+    listing_open = price_7_days["Data"].first["open"]
+    percent = (high/listing_open)*100.0
+    percent > 200.00 ? "coin has seen #{percent} increase in price since listing already" : "coin has not reached over 200% diff in price"
   end
 
 end

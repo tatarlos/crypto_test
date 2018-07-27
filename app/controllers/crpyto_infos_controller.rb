@@ -5,15 +5,18 @@ class CrpytoInfosController < ApplicationController
   def get_ti
     data = params['crpyto_info']
     info = CryptoApis.new
-    ticker = info.set_ticker(data['ticker'])
+    str_date = data['date(1i)'] + '-' + data['date(2i)'] + '-' + data['date(3i)']
+    date = DateTime.parse(str_date)
+    p date
+    ticker = info.set_ticker(data['ticker'], date)
     if ticker
       json = {
           coin:data['ticker'],
           market_cap:info.percent_marketcap,
           market_rank: info.top_fifty?,
-          alltime_high: info.alltime_high
+          alltime_high: info.alltime_high,
+          last_seven: info.last_seven,
       }
-      p json
       respond_to do |format|
         format.json { render json: json  }
       end
