@@ -8,14 +8,20 @@ class CrpytoInfosController < ApplicationController
     str_date = data['date(1i)'] + '-' + data['date(2i)'] + '-' + data['date(3i)']
     date = DateTime.parse(str_date)
     p date
-    ticker = info.set_ticker(data['ticker'], date)
+    ticker = info.set_ticker(data['ticker'])
     if ticker
+      info.set_time(date)
+      event_times = info.event_action
       json = {
           coin:data['ticker'],
           market_cap:info.percent_marketcap,
           market_rank: info.top_fifty?,
           alltime_high: info.alltime_high,
           last_seven: info.last_seven,
+          event_before: event_times[0],
+          event_date: event_times[1],
+          event_after:event_times[2],
+          top_exchange:info.top_exchanges,
       }
       respond_to do |format|
         format.json { render json: json  }

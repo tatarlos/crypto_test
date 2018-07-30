@@ -3,7 +3,7 @@
 .ticker-info-inputs
   = simple_form_for CrpytoInfo.new ,remote: false, url:'#', method: :post do |f|
     = f.input :ticker, placeholder: 'enter ticker', label: 'ticker'
-    =f.input :date, as: :date
+    =f.input :date, as: :date, label: 'Select Event Date'
     = f.button :submit, 'Submit',{class:'confirm-btn'}
 
 .errors
@@ -21,14 +21,17 @@
       %td top 50?
       %td.market-rank
     %tr
-      %td Event 30+
-      %td.event-30 TBA
+      %td Price after event
+      %td.event-after
     %tr
-      %td Event 30+
-      %td.event-30-close TBA
+      %td Price on event day
+      %td.event-date
+    %tr
+      %td Price before event.
+      %td.event-before
     %tr
       %td Top 5 exchange
-      %td.top-5-exchange TBA
+      %td.top-5-exchange
     %tr
       %td all time high range
       %td.all-time-high
